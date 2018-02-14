@@ -1,0 +1,31 @@
+
+
+<div class="row">
+  <div class="col-md-9">
+    <b>User: </b><%= @idea.user.email if @idea.user.present? %>
+    <%= image_tag(@idea.picture_url, width: '100%') if @idea.picture.present? %>
+  </div>
+  <h3>Comments</h3>
+<% @comments.each do |comment| %>
+  <div>
+    <strong>
+      <% if comment.user_id.present? %>
+        <%= User.find_by(id: comment.user_id).email %>
+      <% else %>
+        <%= comment.user_name %>
+      <% end %>
+    </strong>
+    <br>
+    <p><%= comment.body %></p>
+
+<% end %>
+<%= render partial: 'comments/form', locals: { comment: @comment } %>
+
+  <div class="col-md-3">
+    <p><b>Name: </b><%= @idea.name %></p>
+    <p><b>Description: </b><%= @idea.description %></p>
+    <p>
+      <%= link_to 'Back', ideas_path %>
+    </p>
+  </div>
+</div>
